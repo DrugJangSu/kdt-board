@@ -1,0 +1,56 @@
+# Build / IDE / OS
+.gradle/
+build/
+out/
+bin/
+.idea/
+.run/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.class
+.DS_Store
+HELP.md
+
+# Actual Spring configuration stays local, including all profiles
+application*.properties
+application*.yml
+application*.yaml
+bootstrap*.properties
+bootstrap*.yml
+bootstrap*.yaml
+!application-example.properties
+!application-example.yml
+!application-example.yaml
+
+# Environment files and local credentials
+.env
+.env.*
+!.env.example
+*.local.properties
+secrets/
+credentials/
+credentials*.json
+*service-account*.json
+*serviceAccount*.json
+http-client.private.env.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_ed25519
+
+# DB files, dumps, archives and logs
+*.dump
+*.sql.gz
+*.sql.zip
+*.sqlite*
+*.db
+*.log
+*.bak
+dumps/
+backups/
