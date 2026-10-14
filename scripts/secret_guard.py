@@ -25,7 +25,7 @@ def blocked(name):
                          'application-example.properties'}
     if n == '.env' or n.startswith('.env.'):
         return n != '.env.example'
-    return (n in {'id_rsa', 'id_ed25519', 'http-client.private.env.json', '.ds_store'}
+    return (n in {'id_rsa', 'id_ed25519', 'http-client.private.env.json', '.ds_store', 'db-local.properties'}
             or n.startswith('credentials') or 'service-account' in n or 'serviceaccount' in n
             or n.endswith(('.pem', '.key', '.p12', '.pfx', '.jks', '.keystore',
                            '.dump', '.sql.gz', '.sql.zip', '.db', '.sqlite', '.sqlite3',

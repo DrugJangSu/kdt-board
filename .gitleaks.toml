@@ -45,3 +45,13 @@ regexes = ['''^\$\{[A-Z][A-Z0-9_]*\}$''', '''^YOUR_[A-Z0-9_]+$''']
 id = "private-key-header"
 description = "Private key header, including incomplete keys"
 regex = '''-----BEGIN(?: [A-Z0-9]+)* PRIVATE KEY-----'''
+
+[[rules]]
+id = "short-password-variable"
+description = "Password stored in abbreviated variable"
+regex = '''(?i)\b(?:[a-z0-9_]*(?:pass|passwd|pwd|pw)|api[_-]?key)["']?\s*(?:=|:)\s*["']([^"'\r\n]+)["']'''
+secretGroup = 1
+
+[[rules.allowlists]]
+regexTarget = "secret"
+regexes = ['''^\$\{[A-Z][A-Z0-9_]*\}$''', '''^YOUR_[A-Z0-9_]+$''']
