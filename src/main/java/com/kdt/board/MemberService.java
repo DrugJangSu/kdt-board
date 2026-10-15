@@ -3,6 +3,8 @@ package com.kdt.board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -14,6 +16,9 @@ public class MemberService {
 
     public Member save(Member member) {
         return this.memberRepository.save(member);
+    }
+    public List<Member> findAll() {
+        return this.memberRepository.findAll();
     }
 
 }

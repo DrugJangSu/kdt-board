@@ -2,7 +2,6 @@ package com.kdt.board;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "board_member")
 public class Member {
