@@ -25,8 +25,17 @@ public class MemberService {
         return this.memberRepository.findById(id).orElse(null);
     }
 
-//    public Member findByLoginId(String loginId) {
-//
-//    }
+    public Member findByLoginId(String loginId) {
+        return this.memberRepository.findByLoginId(loginId).orElse(null);
+    }
 
+
+    public List<Member> findByNickname(String nickname) {
+        List<Member> members = this.memberRepository.findByNickname(nickname);
+        if (members.isEmpty()) {
+            System.out.println("no");
+            return null;
+        }
+        return members;
+    }
 }

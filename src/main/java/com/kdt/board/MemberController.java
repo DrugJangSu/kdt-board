@@ -30,4 +30,11 @@ public class MemberController {
         return lines.toString();
     }
 
+    @GetMapping("/test/members")
+    public String testMembers() {
+        String a = "kdt01";
+        this.memberService.findByNickname(a);
+        return "ok";
+    }
+
 }
