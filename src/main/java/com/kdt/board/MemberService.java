@@ -20,5 +20,13 @@ public class MemberService {
     public List<Member> findAll() {
         return this.memberRepository.findAll();
     }
+    public Member findById(Long id) {
+//        this.memberRepository.findByNickname();
+        return this.memberRepository.findById(id).orElse(null);
+    }
+
+//    public Member findByLoginId(String loginId) {
+//
+//    }
 
 }
