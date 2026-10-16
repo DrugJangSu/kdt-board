@@ -3,9 +3,15 @@ package com.kdt.board;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "board_post")
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
 
     @Id
@@ -17,6 +23,15 @@ public class Post {
 
     @Column(nullable = false, length = 100)
     private String body;
+
+    @CreatedDate
+    @Column(nullable = false,updatable = false)
+    private Instant createdAt;
+
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 
     public Post() {
     }

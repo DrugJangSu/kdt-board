@@ -17,7 +17,7 @@ public class BoardSeedRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // kdt01 회원이 이미 있으면 그 행을 쓰고 없으면 새로 저장합니다
+        // 기존 회원을 조회하고 없는 경우에만 저장합니다.
         Member saved = null;
         for (Member member : this.memberService.findAll()) {
             if ("kdt01".equals(member.getLoginId())) {
@@ -27,30 +27,50 @@ public class BoardSeedRunner implements ApplicationRunner {
         }
         if (saved == null) {
             Member member = new Member();
-            System.out.println("id before save=" + member.getId());
             member.setLoginId("kdt01");
             member.setNickname("kimbap");
             saved = this.memberService.save(member);
-            System.out.println("id after save=" + saved.getId());
             System.out.println("seed member kdt01");
         } else {
             System.out.println("seed skip kdt01");
         }
 
-        // kdt01이 작성한 closed가 있으면 추가 저장하지 않습니다
+        // kdt01이 작성한 closed와 opened가 있는지 각각 확인합니다.
+        boolean hasClosed = false;
+        boolean hasOpened = false;
         for (Post post : this.postService.findAll()) {
             if ("closed".equals(post.getTitle())
                     && saved.getId().equals(post.getMember().getId())) {
-                System.out.println("seed skip closed");
-                return;
+                hasClosed = true;
+            }
+            if ("opened".equals(post.getTitle())
+                    && saved.getId().equals(post.getMember().getId())) {
+                hasOpened = true;
             }
         }
-        Post post = new Post();
-        post.setTitle("closed");
-        post.setBody("no class");
-        // 이미 저장된 회원 객체를 작성자로 지정
-        post.setMember(saved);
-        this.postService.save(post);
-        System.out.println("seed post closed");
+        if (!hasClosed) {
+            Post closed = new Post();
+            closed.setTitle("closed");
+            closed.setBody("no class");
+            closed.setMember(saved);
+            this.postService.save(closed);
+            System.out.println("seed post closed");
+        } else {
+            System.out.println("seed skip closed");
+        }
+        if (!hasOpened) {
+            Post opened = new Post();
+            opened.setTitle("opened");
+            opened.setBody("after column");
+            opened.setMember(saved);
+            System.out.println("opened id before save=" + opened.getId());
+            System.out.println("opened createdAt before save=" + opened.getCreatedAt());
+            Post savedOpened = this.postService.save(opened);
+            System.out.println("opened id after save=" + savedOpened.getId());
+            System.out.println("opened createdAt after save=" + savedOpened.getCreatedAt());
+            System.out.println("seed post opened");
+        } else {
+            System.out.println("seed skip opened");
+        }
     }
 }
