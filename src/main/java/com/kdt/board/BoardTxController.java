@@ -18,4 +18,12 @@ public class BoardTxController {
         return this.boardTxService.registerOk();
     }
 
+    @GetMapping("/tx/fail")
+    public String fail() {
+        try {
+            return this.boardTxService.registerFail();
+        } catch (IllegalStateException ex) {
+            return "rolled " + ex.getMessage();
+        }
+    }
 }

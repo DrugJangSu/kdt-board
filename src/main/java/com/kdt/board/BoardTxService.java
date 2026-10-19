@@ -1,6 +1,5 @@
 package com.kdt.board;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +18,7 @@ public class BoardTxService {
 
     @Transactional
     public String registerOk() {
-        String loginId = "kdt" + System.currentTimeMillis(); // 현재 시각을 long time으로 반환해줌
+        String loginId = "kdt" + System.currentTimeMillis();
         Member member = new Member();
         member.setLoginId(loginId);
         member.setNickname("kimbap");
@@ -34,4 +33,22 @@ public class BoardTxService {
         return "ok" + loginId;
     }
 
+    @Transactional
+    public String registerFail() {
+        String loginId = "kdt " + System.currentTimeMillis();
+        Member member = new Member();
+        member.setLoginId(loginId);
+        member.setNickname("kimbap");
+        Member saved = this.memberRepository.save(member);
+
+        Post post = new Post();
+        post.setTitle("closed");
+        post.setBody("no class");
+        post.setMember(saved);
+        this.postRepository.save(post);
+
+        System.out.println("tx fail " + loginId);
+
+        throw new IllegalStateException(loginId);
+    }
 }
