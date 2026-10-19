@@ -22,6 +22,8 @@ public class PostController {
                     .append(post.getTitle())
                     .append(" ")
                     .append(post.getCreatedAt())
+                    .append(" ")
+                    .append(post.getUpdatedAt())
                     .append("\n");
         }
         return lines.toString();

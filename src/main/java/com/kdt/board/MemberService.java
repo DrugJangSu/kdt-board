@@ -1,5 +1,6 @@
 package com.kdt.board;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,11 @@ public class MemberService {
             return null;
         }
         return members;
+    }
+    @Transactional
+    public void register(Member member, Post post) {
+        Member saved = this.memberRepository.save(member);
+        post.setMember(saved);
+        this.postRepository.save(post);
     }
 }

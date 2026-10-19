@@ -25,12 +25,20 @@ public class Post {
     private String body;
 
     @CreatedDate
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false,updatable = false, name = "created_at")
     private Instant createdAt;
 
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    @LastModifiedDate
+    @Column(nullable = false, name = "updated_at")
+    private Instant updatedAt;
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 
     public Post() {
