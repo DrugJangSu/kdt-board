@@ -73,4 +73,16 @@ public class BoardTxService {
         System.out.println("tx open" + loginId);
         throw new IllegalStateException(loginId);
     }
+    // 더티 체킹 실습: save 후 닉네임만 바꿔도(save 재호출 없이) 커밋 때 UPDATE가 자동 실행됨
+    // 트랜잭션 안에서 조회·저장된 엔티티는 변경이 감지되기 때문
+    @Transactional
+    public String registerDirty() {
+        String loginId = "dirty " + System.currentTimeMillis();
+        Member member = new Member(loginId, "first");
+        Member saved = this.memberRepository.save(member);
+        System.out.println("dirty before " + saved.getNickname());
+        saved.setNickname("second");
+        System.out.println("dirty after " + saved.getNickname());
+        return "dirty " + saved.getLoginId();
+    }
 }

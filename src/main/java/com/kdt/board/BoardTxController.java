@@ -55,4 +55,10 @@ public class BoardTxController {
     public String proxyName() {
         return this.boardTxService.getClass().getName();
     }
+
+    // /tx/dirty: 회원 저장 후 닉네임을 first → second로 변경, 더티 체킹으로 DB에 반영되는지 확인
+    @GetMapping("/tx/dirty")
+    public String dirty() {
+        return this.boardTxService.registerDirty();
+    }
 }
