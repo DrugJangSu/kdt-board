@@ -39,10 +39,10 @@ public class MemberService {
         }
         return members;
     }
-    @Transactional
-    public void register(Member member, Post post) {
-        Member saved = this.memberRepository.save(member);
-        post.setMember(saved);
-        this.postRepository.save(post);
-    }
+//    @Transactional
+//    public void register(Member member, Post post) {
+//        Member saved = this.memberRepository.save(member);
+//        post.setMember(saved);
+//        this.postRepository.save(post);    // ← 46번 줄. MemberService엔 postRepository가 없음
+//    }
 }
