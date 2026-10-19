@@ -62,4 +62,15 @@ public class BoardTxService {
     public String failBySelf() {
         return this.registerFail();
     }
+    // @Transactional 없이 회원만 저장한 뒤 예외를 던짐
+    // 트랜잭션이 없어 롤백되지 않으므로 예외가 나도 회원이 DB에 남음
+    public String registerOpen() {
+        String loginId = "kdt " + System.currentTimeMillis();
+        Member member = new Member();
+        member.setLoginId(loginId);
+        member.setNickname("kimbap");
+        this.memberRepository.save(member);
+        System.out.println("tx open" + loginId);
+        throw new IllegalStateException(loginId);
+    }
 }

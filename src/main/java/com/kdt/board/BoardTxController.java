@@ -39,4 +39,20 @@ public class BoardTxController {
             return "left " + ex.getMessage();
         }
     }
+
+    // /tx/open: 트랜잭션 없이 회원만 저장 후 예외 발생, 회원이 DB에 남음
+    @GetMapping("/tx/open")
+    public String open() {
+        try {
+            return this.boardTxService.registerOpen();
+        } catch (IllegalStateException ex) {
+            return "left " + ex.getMessage();
+        }
+    }
+
+    // /tx/proxy: 주입된 서비스의 실제 클래스 이름 출력 (프록시 객체인지 확인용)
+    @GetMapping("/tx/proxy")
+    public String proxyName() {
+        return this.boardTxService.getClass().getName();
+    }
 }
