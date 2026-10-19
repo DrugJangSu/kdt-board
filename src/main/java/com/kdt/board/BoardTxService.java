@@ -36,7 +36,8 @@ public class BoardTxService {
     }
 
     @Transactional
-    // 회원과 게시글을 저장한 뒤 일부러 예외를 던져 롤백시킴
+    // 회원과 게시글을 저장한 뒤 일부러 예외를 던짐
+    // 다른 클래스에서 프록시를 거쳐 호출되면 롤백됨 (this로 호출되면 롤백 안 됨)
     public String registerFail() {
         String loginId = "kdt " + System.currentTimeMillis();
         Member member = new Member();
@@ -55,7 +56,9 @@ public class BoardTxService {
         throw new IllegalStateException(loginId);
     }
 
-    // @Transactional 없이 같은 클래스의 registerFail()을 직접 호출 (프록시를 거치지 않아 롤백 안 됨)
+    // @Transactional 없이 같은 클래스의 registerFail()을 this로 호출
+    // 프록시를 거치지 않아 registerFail의 @Transactional도 무시됨
+    // save마다 각자 커밋되어, 예외가 나도 회원·게시글이 DB에 남음
     public String failBySelf() {
         return this.registerFail();
     }
