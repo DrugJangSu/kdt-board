@@ -1,3 +1,4 @@
+// (비활성) 시작할 때 메뉴 메시지를 콘솔에 출력하던 러너
 //package com.kdt.board;
 //
 //import org.springframework.beans.factory.annotation.Autowired;

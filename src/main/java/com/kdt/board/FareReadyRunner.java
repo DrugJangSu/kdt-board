@@ -1,3 +1,4 @@
+// (비활성) 시작할 때 요금을 콘솔에 출력하던 러너
 //package com.kdt.board;
 //
 //import lombok.RequiredArgsConstructor;

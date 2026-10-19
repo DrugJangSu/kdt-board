@@ -1,3 +1,4 @@
+// (비활성) 시작할 때 kdt01 회원과 closed/opened 게시글을 없으면 만들어 주는 초기 데이터 러너
 //package com.kdt.board;
 //
 //import org.springframework.boot.ApplicationArguments;

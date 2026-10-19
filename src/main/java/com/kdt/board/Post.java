@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
+// 게시글 엔티티 (board_post 테이블)
 @Entity
 @Table(name = "board_post")
 @EntityListeners(AuditingEntityListener.class)
@@ -16,14 +17,18 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // 게시글 PK (DB가 자동 증가)
     private Long id;
 
+    // 제목: 필수, 최대 20자
     @Column(nullable = false, length = 20)
     private String title;
 
+    // 본문: 필수, 최대 100자
     @Column(nullable = false, length = 100)
     private String body;
 
+    // 생성 시각 (최초 저장 시 자동 입력, 수정 불가)
     @CreatedDate
     @Column(nullable = false,updatable = false, name = "created_at")
     private Instant createdAt;
@@ -33,6 +38,7 @@ public class Post {
         return createdAt;
     }
 
+    // 수정 시각 (저장/수정할 때마다 자동 갱신)
     @LastModifiedDate
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
@@ -44,6 +50,7 @@ public class Post {
     public Post() {
     }
 
+    // 작성자(회원): 필수, 실제로 사용할 때 조회(지연 로딩)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;

@@ -1,3 +1,4 @@
+// (비활성) 게시글 본문을 수정해 createdAt/updatedAt 변화를 콘솔로 확인하던 러너
 //package com.kdt.board;
 //
 //import java.time.Instant;

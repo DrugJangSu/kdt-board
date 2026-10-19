@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// 회원 저장/조회 서비스
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -15,22 +16,27 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    // 회원 저장
     public Member save(Member member) {
         return this.memberRepository.save(member);
     }
+    // 전체 회원 조회
     public List<Member> findAll() {
         return this.memberRepository.findAll();
     }
+    // ID로 조회 (없으면 null)
     public Member findById(Long id) {
 //        this.memberRepository.findByNickname();
         return this.memberRepository.findById(id).orElse(null);
     }
 
+    // 로그인 ID로 조회 (없으면 null)
     public Member findByLoginId(String loginId) {
         return this.memberRepository.findByLoginId(loginId).orElse(null);
     }
 
 
+    // 닉네임으로 조회 (없으면 "no" 출력 후 null)
     public List<Member> findByNickname(String nickname) {
         List<Member> members = this.memberRepository.findByNickname(nickname);
         if (members.isEmpty()) {

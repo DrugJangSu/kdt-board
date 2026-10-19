@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// 회원 조회 컨트롤러
 @RestController
 public class MemberController {
 
@@ -15,6 +16,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    // /members: 전체 회원을 "ID 로그인ID 닉네임" 한 줄씩 출력
     @GetMapping("/members")
     public String members() {
         StringBuilder lines = new StringBuilder();
@@ -30,6 +32,7 @@ public class MemberController {
         return lines.toString();
     }
 
+    // /test/members: 닉네임으로 조회 테스트 (결과는 출력하지 않고 "ok"만 응답)
     @GetMapping("/test/members")
     public String testMembers() {
         String a = "kdt01";

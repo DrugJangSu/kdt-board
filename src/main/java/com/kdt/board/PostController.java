@@ -3,6 +3,7 @@ package com.kdt.board;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// 게시글 조회 컨트롤러
 @RestController
 public class PostController {
 
