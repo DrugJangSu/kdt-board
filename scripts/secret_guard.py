@@ -18,7 +18,12 @@ def blocked(name):
     p = PurePosixPath(name)
     n = p.name.lower()
     if any(x.lower() in {'.idea', '.gradle', '.run', 'build', 'out', 'secrets',
-                         'credentials', 'dumps', 'backups'} for x in p.parts):
+                         'credentials', 'dumps', 'backups', 'logs', 'log'} for x in p.parts):
+        return True
+    # Runtime captures may contain personal data that secret patterns cannot detect.
+    if (re.search(r'\.log(?:$|[._-])', n) or re.search(r'\.out(?:$|\.)', n)
+            or n.endswith(('.hprof', '.jfr', '.har', '.pcap', '.pcapng'))
+            or n.startswith(('hs_err_pid', 'replay_pid'))):
         return True
     if re.fullmatch(r'(application|bootstrap).*\.(yaml|yml|properties)', n):
         return n not in {'application-example.yaml', 'application-example.yml',

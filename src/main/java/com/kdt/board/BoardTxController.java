@@ -61,4 +61,14 @@ public class BoardTxController {
     public String dirty() {
         return this.boardTxService.registerDirty();
     }
+
+    // /tx/flushed-fail: flush로 SQL이 이미 나간 뒤 예외가 나도 롤백되어 DB에 안 남는지 확인
+    @GetMapping("/tx/flushed-fail")
+    public String flushedFail() {
+        try {
+            return this.boardTxService.registerFlushFail();
+        } catch (IllegalStateException ex) {
+            return "rolled " + ex.getMessage();
+        }
+    }
 }

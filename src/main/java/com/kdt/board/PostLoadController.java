@@ -33,4 +33,10 @@ public class PostLoadController {
 
         return post.getTitle() + " by " + loginId;
     }
+
+    @GetMapping("/posts/read-in-tx")
+    public String readInTx() {
+        Long postId = 1L;
+        return this.postService.findTitleWithLoginId(postId);
+    }
 }

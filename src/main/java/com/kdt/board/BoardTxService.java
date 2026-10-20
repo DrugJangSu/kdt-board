@@ -85,4 +85,15 @@ public class BoardTxService {
         System.out.println("dirty after " + saved.getNickname());
         return "dirty " + saved.getLoginId();
     }
+    // flush 후 롤백 실습: 저장·닉네임 변경 뒤 flush()로 SQL을 DB에 먼저 보낸 다음 예외를 던짐
+    // flush는 커밋이 아니라 SQL 전송일 뿐이라, 트랜잭션이 롤백되면 전송한 내용도 모두 취소됨
+    @Transactional
+    public String registerFlushFail(){
+        String loginId = "flush " + System.currentTimeMillis();
+        Member saved = this.memberRepository.save(new Member(loginId, "before"));
+        saved.setNickname("after");
+        this.memberRepository.flush();
+        System.out.println("flush returned" + loginId);
+        throw new IllegalStateException(loginId);
+    }
 }
