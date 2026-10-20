@@ -48,6 +48,7 @@ public class PostController {
                 + post.getMember().getLoginId();
     }
 
+    // /posts/with-member: 일반 findAll 후 작성자를 접근해 N+1 쿼리 발생을 비교합니다.
     @GetMapping("/posts/with-member")
     public String withMember() {
         log.info("sql compare normal begin");
@@ -64,6 +65,7 @@ public class PostController {
         return lines.toString();
     }
 
+    // /posts/joined: join fetch로 게시글과 작성자를 한 번에 조회해 쿼리 수를 비교합니다.
     @GetMapping("/posts/joined")
     public String joined(){
         log.info("sql compare joined begin");
@@ -78,15 +80,22 @@ public class PostController {
         return lines.toString();
     }
 
+    // /posts/count: DB count 쿼리로 게시글 수를 조회합니다.
     @GetMapping("/posts/count")
     public String count() {
         return "" + this.postService.countPosts();
     }
 
 
+    // /posts/list-count: 전체 게시글을 로딩한 뒤 리스트 크기로 개수를 셉니다.
     @GetMapping("/posts/list-count")
     public String listCount() {
         return "" + this.postService.countLoadedPosts();
     }
 
+    // /posts/title-count/closed: 제목이 "closed"인 게시글 수를 반환합니다.
+    @GetMapping("/posts/title-count/closed")
+    public String countClosed() {
+        return "" + this.postService.countByTitle("closed");
+    }
 }
