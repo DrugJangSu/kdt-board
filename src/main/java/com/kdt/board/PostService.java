@@ -1,10 +1,12 @@
 package com.kdt.board;
 
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // 게시글 저장/조회/삭제 서비스
@@ -78,4 +80,18 @@ public class PostService {
         return this.postRepository.countByTitle(title);
     }
 
+    @Transactional(readOnly = true)
+    public List<PostResponse> listResponse() {
+        List<PostResponse> result = new ArrayList<>();
+        for (Post post : this.postRepository.findAll()) {
+            PostResponse pr = toResponse(post);
+            result.add(pr);
+        }
+        return result;
+    }
+
+    private PostResponse toResponse(Post post) {
+        String loginId = post.getMember().getLoginId();
+        return new PostResponse(post.getId(), post.getTitle(), loginId, post.getCreatedAt());
+    }
 }

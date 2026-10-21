@@ -25,6 +25,9 @@ public class HelloController {
         List<String> strings = this.helloService.message2("good", "h2");
 
         String ab = strings.get(0) + strings.get(1);
+        TitleResponse good = new TitleResponse("good");
+        good.title();
+
         return ab;
     }
 }
