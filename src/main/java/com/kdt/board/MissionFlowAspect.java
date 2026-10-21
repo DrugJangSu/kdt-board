@@ -20,7 +20,7 @@ public class MissionFlowAspect {
     //   execution(* 패키지.클래스.메서드(..)) 형식이고, * 는 "반환 타입 아무거나", (..) 는 "파라미터 아무거나"라는 뜻
     // 아래는 HelloService.message() 이거나(||) BoardTxService.registerFail() 일 때 적용한다는 의미
     @Around("execution(* com.kdt.board.HelloService.message()) || "
-            + "execution(* com.kdt.board.BoardTxService.registerFail(..)")
+            + "execution(* com.kdt.board.BoardTxService.registerFail(..))")
     // ProceedingJoinPoint: "지금 가로챈 메서드" 정보를 담고 있고, 그 메서드를 실제로 실행시킬 수 있는 객체
     // 반환 타입이 Object: 가로챈 메서드가 돌려주는 값을 그대로 다시 돌려줘야 해서 아무 타입이나 받을 수 있게 함
     // throws Throwable: 가로챈 메서드에서 어떤 예외가 나도 밖으로 그대로 던질 수 있게 하기 위함
