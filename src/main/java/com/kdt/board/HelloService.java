@@ -3,6 +3,9 @@ package com.kdt.board;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 메시지를 제공하는 서비스 클래스.
  *
@@ -15,6 +18,13 @@ public class HelloService {
     // 호출할 때마다 고정 문자열 "kimbap"을 돌려주는 메서드
     public String message() {
         return "kimbap";
+    }
+
+    public List<String> message2(String a,String b){
+        List<String> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        return list;
     }
 
 }

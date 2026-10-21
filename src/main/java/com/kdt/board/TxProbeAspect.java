@@ -29,4 +29,12 @@ public class TxProbeAspect {
         // getSignature().getName() : 가로챈 메서드의 이름 ("registerOk")
         System.out.println("aspect " + joinPoint.getSignature().getName());
     }
+
+//    @Before("execution(* com.kdt.board.BoardTxController.ok(..))")
+//    public void beforeOkName(JoinPoint joinPoint) {
+//        System.out.println("probe " + joinPoint.getSignature().getName());
+//    }
+
+
+
 }

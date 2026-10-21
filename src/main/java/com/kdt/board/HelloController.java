@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 // 인사 메시지 컨트롤러
 @RestController
 @RequiredArgsConstructor
@@ -16,5 +18,13 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello() {
         return this.helloService.message();
+    }
+
+    @GetMapping("/testhello")
+    public String hello2() {
+        List<String> strings = this.helloService.message2("good", "h2");
+
+        String ab = strings.get(0) + strings.get(1);
+        return ab;
     }
 }
