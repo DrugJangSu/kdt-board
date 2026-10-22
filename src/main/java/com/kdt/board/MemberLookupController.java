@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberLookupController {
     private final MemberService memberService;
 
+    // 스프링이 MemberService를 자동으로 넣어주는 생성자예요(의존성 주입).
     public MemberLookupController(MemberService memberService) {
         this.memberService = memberService;
     }

@@ -11,6 +11,7 @@ import java.util.List;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    // 스프링이 MemberRepository를 자동으로 넣어주는 생성자예요(의존성 주입).
     @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;

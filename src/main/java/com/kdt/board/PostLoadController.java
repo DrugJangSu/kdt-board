@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostLoadController {
     private final PostService postService;
 
+    // 스프링이 PostService를 자동으로 넣어주는 생성자예요(의존성 주입).
     public PostLoadController(PostService postService) {
         this.postService = postService;
     }
@@ -34,6 +35,7 @@ public class PostLoadController {
         return post.getTitle() + " by " + loginId;
     }
 
+    // /posts/read-in-tx: 트랜잭션 안에서 제목과 작성자 loginId를 한 번에 조회해 응답
     @GetMapping("/posts/read-in-tx")
     public String readInTx() {
         Long postId = 1L;

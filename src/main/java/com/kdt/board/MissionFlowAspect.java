@@ -1,3 +1,4 @@
+// (비활성) HelloService.message()와 BoardTxService.registerFail() 앞뒤로 로그와 걸린 시간을 찍던 AOP 클래스
 //package com.kdt.board;
 //
 //import org.aspectj.lang.ProceedingJoinPoint;

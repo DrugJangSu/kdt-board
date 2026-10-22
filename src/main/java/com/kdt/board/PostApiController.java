@@ -85,4 +85,10 @@ public class PostApiController {
         return this.postService.update(id, request);
     }
 
+    // DELETE /api/v1/posts/3 처럼 id로 지정한 게시글을 삭제해요. (성공하면 내용 없이 204 응답)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        this.postService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

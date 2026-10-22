@@ -24,6 +24,7 @@ public class Member {
     @Column(nullable = false, length = 20)
     private String nickname;
 
+    // 기본 생성자 (JPA가 객체를 만들 때 꼭 필요해요)
     public Member() {
     }
 
@@ -36,11 +37,13 @@ public class Member {
         this.posts.add(post);
     }
 
+    // 로그인 ID와 닉네임을 바로 넣어서 회원을 만드는 생성자
     public Member(String loginId, String nickname) {
         this.loginId = loginId;
         this.nickname = nickname;
     }
 
+    // 아래는 필드 값을 읽고(get) 바꾸는(set) 메서드들이에요.
     public Long getId() {
         return id;
     }

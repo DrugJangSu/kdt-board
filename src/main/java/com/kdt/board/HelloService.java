@@ -20,6 +20,7 @@ public class HelloService {
         return "kimbap";
     }
 
+    // 문자열 두 개를 받아 순서대로 리스트에 담아 돌려주는 메서드
     public List<String> message2(String a,String b){
         List<String> list = new ArrayList<>();
         list.add(a);

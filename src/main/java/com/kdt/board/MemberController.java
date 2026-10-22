@@ -11,6 +11,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    // 스프링이 MemberService를 자동으로 넣어주는 생성자예요(의존성 주입).
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;

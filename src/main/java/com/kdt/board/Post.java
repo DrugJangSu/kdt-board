@@ -34,6 +34,7 @@ public class Post {
     private Instant createdAt;
 
 
+    // 생성 시각 읽기
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -43,10 +44,12 @@ public class Post {
     @Column(nullable = false, name = "updated_at")
     private Instant updatedAt;
 
+    // 수정 시각 읽기
     public Instant getUpdatedAt() {
         return updatedAt;
     }
 
+    // 기본 생성자 (JPA가 객체를 만들 때 꼭 필요해요)
     public Post() {
     }
 
@@ -55,6 +58,7 @@ public class Post {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    // 아래는 필드 값을 읽고(get) 바꾸는(set) 메서드들이에요.
     public Long getId() {
         return id;
     }

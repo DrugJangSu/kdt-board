@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardTxController {
     private final BoardTxService boardTxService;
 
+    // 스프링이 BoardTxService를 자동으로 넣어주는 생성자예요(의존성 주입).
     @Autowired
     public BoardTxController(BoardTxService boardTxService) {
         this.boardTxService = boardTxService;

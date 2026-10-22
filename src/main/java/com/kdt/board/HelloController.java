@@ -20,6 +20,7 @@ public class HelloController {
         return this.helloService.message();
     }
 
+    // /testhello: message2("good","h2")가 돌려준 두 글자를 이어 붙여 "goodh2"로 응답
     @GetMapping("/testhello")
     public String hello2() {
         List<String> strings = this.helloService.message2("good", "h2");

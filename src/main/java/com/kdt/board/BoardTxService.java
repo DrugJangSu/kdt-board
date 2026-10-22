@@ -11,6 +11,7 @@ public class BoardTxService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
+    // 스프링이 두 Repository를 자동으로 넣어주는 생성자예요(의존성 주입).
     @Autowired
     public BoardTxService(MemberRepository memberRepository, PostRepository postRepository) {
         this.memberRepository = memberRepository;

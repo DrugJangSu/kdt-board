@@ -181,6 +181,7 @@ public class PostService {
         return toResponse(saved);
     }
 
+    // 게시글의 제목·본문 수정 (트랜잭션 안에서 값만 바꿔도 더티 체킹으로 DB에 반영돼요)
     @Transactional
     public PostResponse update(Long id, PostUpdateRequest request) {
         Post post = this.postRepository.findById(id).orElseThrow(() -> new NotFoundException("post missing"));
@@ -188,4 +189,13 @@ public class PostService {
         post.setBody(request.body());
         return toResponse(post);
     }
+
+    // ID로 게시글 삭제 (없으면 NotFoundException)
+    @Transactional
+    public void delete(Long id) {
+        Post post = this.postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("post missing"));
+        this.postRepository.delete(post);
+    }
+
 }
