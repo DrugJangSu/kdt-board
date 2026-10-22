@@ -4,11 +4,9 @@ package com.kdt.board;
 // 스프링이 필요한 객체(PostService)를 자동으로 넣어주게 하는 어노테이션을 가져와요.
 import org.springframework.beans.factory.annotation.Autowired;
 // "GET 요청이 오면 이 메서드를 실행해라"라고 지정하는 어노테이션을 가져와요.
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 // 클래스나 메서드에 URL 주소를 연결해주는 어노테이션을 가져와요.
-import org.springframework.web.bind.annotation.RequestMapping;
 // 화면(HTML)이 아니라 데이터(JSON)를 응답하는 컨트롤러임을 표시하는 어노테이션을 가져와요.
-import org.springframework.web.bind.annotation.RestController;
 
 // 여러 개의 값을 순서대로 담는 목록(List)을 사용하기 위해 가져와요.
 import java.util.List;
@@ -37,5 +35,15 @@ public class PostApiController {
     public List<PostResponse> list() {
         // 서비스에게 게시글 목록 조회를 맡기고, 그 결과를 그대로 반환해요.
         return this.postService.listResponse();
+    }
+    @GetMapping("/{id}")
+    public PostResponse one(@PathVariable("id") Long id) {
+        return this.postService.findResponse(id);
+    }
+
+    @GetMapping("/count-by-title")
+    public long countByTitle(@RequestParam("title") String title) {
+
+        return this.postService.countByTitle(title);
     }
 }

@@ -90,6 +90,15 @@ public class PostService {
         return result;
     }
 
+    @Transactional(readOnly = true)
+    public PostResponse findResponse(Long id) {
+        Post post = this.postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("post missing"));
+        return toResponse(post);
+    }
+
+
+
     private PostResponse toResponse(Post post) {
         String loginId = post.getMember().getLoginId();
         return new PostResponse(post.getId(), post.getTitle(), loginId, post.getCreatedAt());
