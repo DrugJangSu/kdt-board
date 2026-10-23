@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
  *  - Service, Repository 같은 다른 객체는 자동으로 만들어주지 않습니다.
  *    그래서 아래처럼 가짜(Mock)를 직접 넣어줘야 합니다.
  */
-@WebMvcTest(HelloControllerTest.class)
+@WebMvcTest(HelloController.class)
 public class HelloControllerTest {
 
     // MockMvc : 진짜 서버를 켜지 않고도 "GET /hello 요청을 보낸 것처럼" 흉내 내주는 도구입니다.
