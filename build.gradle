@@ -24,6 +24,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 테스트 도구 모음: JUnit(테스트 실행), Mockito(가짜 객체), AssertJ(검증) 등이 한꺼번에 들어옵니다.
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'

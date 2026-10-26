@@ -25,9 +25,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+
 @WebMvcTest(PostApiController.class)
 @Import(ApiExceptionAdvice.class)
 public class PostApiControllerTest {
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +45,7 @@ public class PostApiControllerTest {
     @Test
     void one_returns_200_json() throws Exception {
 
-        // 준비
+        // 준비 : 서비스가 돌려줄 "가짜 응답 데이터"를 만듭니다. (끝의 L 은 Long 타입 숫자라는 표시)
         PostResponse row = new PostResponse(
                 1L,
                 "closed",
@@ -51,11 +53,15 @@ public class PostApiControllerTest {
                 Instant.parse("2026-10-23T00:00:00Z")
         );
 
-        // 스텁
+        // 스텁(stub) : "서비스의 findResponse(1)이 호출되면 위에서 만든 row 를 돌려줘" 라고 미리 약속해 둡니다.
         given(this.postService.findResponse(1L))
                 .willReturn(row);
 
         // 실행 + 검증
+        // get("/api/v1/posts/{id}", 1L) : {id} 자리에 1이 들어가 GET /api/v1/posts/1 요청이 됩니다.
+        // status().isOk()               : 상태 코드가 200 인지 확인
+        // contentTypeCompatibleWith     : 응답이 JSON 형식인지 확인
+        // jsonPath("$.id")              : JSON 에서 id 값을 꺼내 확인 ($ 는 JSON 전체의 시작점)
         this.mockMvc.perform(get("/api/v1/posts/{id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
@@ -64,8 +70,10 @@ public class PostApiControllerTest {
                 .andExpect(jsonPath("$.loginId").value("kdt01"))
                 .andExpect(jsonPath("$.createdAt")
                         .value("2026-10-23T00:00:00Z"))
+                // length() : JSON 필드 개수. 4개만 나가는지(불필요한 값이 새지 않는지) 확인
                 .andExpect(jsonPath("$.length()").value(4));
 
+        // verify : "서비스의 findResponse(1)이 실제로 1번 호출됐는지" 확인합니다.
         verify(this.postService).findResponse(1L);
     }
 
@@ -77,7 +85,8 @@ public class PostApiControllerTest {
     @Test
     void missing_post_returns_404_json() throws Exception {
 
-        // 스텁
+        // 스텁 : 이번에는 값을 돌려주는 대신 "없다!"는 예외(NotFoundException)를 던지게 합니다.
+        //        ApiExceptionAdvice 가 이 예외를 잡아 404 + 에러 JSON 으로 바꿔줍니다.
         given(this.postService.findResponse(99999L))
                 .willThrow(new NotFoundException("post missing"));
 
@@ -99,6 +108,8 @@ public class PostApiControllerTest {
     @Test
     void blank_title_post_returns_400_before_service() throws Exception {
 
+        // content(""" ... """) : 요청 본문(body)에 담아 보낼 JSON. (""" 는 여러 줄 문자열 문법)
+        // title 이 "" 라서 PostCreateRequest 의 검증(@NotBlank)에 걸려 400 이 나와야 합니다.
         this.mockMvc.perform(
                         post("/api/v1/posts")
                                 .contentType(APPLICATION_JSON)
@@ -112,6 +123,8 @@ public class PostApiControllerTest {
                 )
                 .andExpect(status().isBadRequest());
 
+        // verifyNoInteractions : 서비스가 "한 번도 호출되지 않았음"을 확인합니다.
+        //   -> 컨트롤러에 들어오기 전 검증 단계에서 이미 막혔다는 증거입니다.
         verifyNoInteractions(this.postService);
     }
 
@@ -123,7 +136,7 @@ public class PostApiControllerTest {
     @Test
     void create_returns_201_and_passes_request_values() throws Exception {
 
-        // 준비
+        // 준비 : 클라이언트가 보낸 JSON 이 이 객체와 "같은 값"으로 변환되어 서비스에 전달되길 기대합니다.
         PostCreateRequest expected =
                 new PostCreateRequest(
                         "plate",
@@ -139,7 +152,8 @@ public class PostApiControllerTest {
                         Instant.parse("2026-10-23T00:00:00Z")
                 );
 
-        // 스텁
+        // 스텁 : create(expected) 가 호출되면 created 를 돌려줘.
+        //        (record 는 값이 같으면 equals 가 true 라서 JSON 변환 결과와 비교됩니다)
         given(this.postService.create(expected))
                 .willReturn(created);
 
@@ -155,7 +169,9 @@ public class PostApiControllerTest {
                                         }
                                         """)
                 )
+                // 201 Created : "새로 만들었다"는 의미의 성공 코드
                 .andExpect(status().isCreated())
+                // Location 헤더 : 새로 만든 글을 볼 수 있는 주소를 알려줍니다.
                 .andExpect(header().string(
                         "Location",
                         "/api/v1/posts/42"
@@ -167,6 +183,7 @@ public class PostApiControllerTest {
                 .andExpect(jsonPath("$.createdAt")
                         .value("2026-10-23T00:00:00Z"))
                 .andExpect(jsonPath("$.length()").value(4))
+                // doesNotHaveJsonPath : 해당 필드가 응답에 "없어야 한다"는 검증 (요청용 값이 응답에 새지 않는지)
                 .andExpect(jsonPath("$.body").doesNotHaveJsonPath())
                 .andExpect(jsonPath("$.memberId").doesNotHaveJsonPath());
 
